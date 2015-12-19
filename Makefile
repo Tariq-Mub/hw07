@@ -16,7 +16,7 @@ INDENT = /usr/bin/indent
 CC        = clang
 LDFLAGS   = -O2
 CFLAGS    = -Weverything -Wextra -pedantic $(LDFLAGS)
-LDLIBS    = -lm
+LDLIBS    = $(shell gsl-config --libs)
 
 .SUFFIXES:
 .SUFFIXES:  .c .o .h
@@ -25,7 +25,7 @@ LDLIBS    = -lm
 
 target    = recur
 
-$(target) : $(target).o
+$(target) : $(target).o integral_gen.o
 	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 edit : $(target).c
